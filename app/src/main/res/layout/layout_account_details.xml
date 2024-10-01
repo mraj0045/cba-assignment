@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <TextView
+      android:id="@+id/txt_available"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen_20"
+      android:text="@string/available"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/dollar_price"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_10"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_16"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txt_available" />
+
+  <TextView
+      android:id="@+id/txt_balance"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_10"
+      android:text="@string/balance"
+      android:textColor="@color/textColorGrey"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dollar_price" />
+
+  <TextView
+      android:id="@+id/dollar_balance"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_10"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintLeft_toRightOf="@+id/txt_balance"
+      app:layout_constraintTop_toBottomOf="@+id/dollar_price" />
+
+  <TextView
+      android:id="@+id/txt_pending"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_10"
+      android:text="@string/pending_txt"
+      android:textColor="@color/textColorGrey"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txt_balance" />
+
+  <TextView
+      android:id="@+id/dollar_pending"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_10"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintLeft_toRightOf="@+id/txt_pending"
+      app:layout_constraintTop_toBottomOf="@+id/txt_balance" />
+
+  <View
+      android:id="@+id/line1"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen_1"
+      android:layout_marginTop="@dimen/dimen_30"
+      android:background="@color/textColorGrey"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txt_pending" />
+
+  <TextView
+      android:id="@+id/txt_bsb"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/dimen_20"
+      android:layout_marginVertical="@dimen/dimen_20"
+      android:text="@string/bsb"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+  <TextView
+      android:id="@+id/bsb_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="@dimen/dimen_20"
+      android:layout_marginStart="@dimen/dimen_10"
+      android:textColor="@color/textColorGrey"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintLeft_toRightOf="@+id/txt_bsb"
+      app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+  <TextView
+      android:id="@+id/txt_account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="@dimen/dimen_20"
+      android:layout_marginStart="@dimen/dimen_10"
+      android:text="@string/account"
+      android:textColor="@color/colorOnPrimary"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintLeft_toRightOf="@+id/bsb_value"
+      app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+  <TextView
+      android:id="@+id/account_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="@dimen/dimen_20"
+      android:layout_marginStart="@dimen/dimen_10"
+      android:textColor="@color/textColorGrey"
+      android:textSize="@dimen/text_size_14"
+      app:layout_constraintLeft_toRightOf="@+id/txt_account"
+      app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+  <View
+      android:id="@+id/line2"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen_1"
+      android:layout_marginTop="@dimen/dimen_20"
+      android:background="@color/textColorGrey"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txt_bsb" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

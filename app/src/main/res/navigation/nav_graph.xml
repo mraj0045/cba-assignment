@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/TransactionList">
+
+    <fragment
+        android:id="@+id/TransactionList"
+        android:name="com.cba.assignment.transactions.TransactionListFragment"
+        android:label="@string/transaction_list_fragment_label"
+        tools:layout="@layout/fragment_transaction_list">
+
+        <action
+            android:id="@+id/action_TransactionList_to_TransactionDetails"
+            app:destination="@id/TransactionDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/TransactionDetails"
+        android:name="com.cba.assignment.details.TransactionDetailFragment"
+        android:label="@string/transaction_details_fragment_label"
+        tools:layout="@layout/fragment_transaction_detail">
+
+        <argument
+            android:name="category"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+
+        <argument
+            android:name="amount"
+            app:argType="float" />
+        <argument
+            android:name="isPending"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/action_TransactionDetails_to_TransactionList"
+            app:destination="@id/TransactionList" />
+    </fragment>
+</navigation>

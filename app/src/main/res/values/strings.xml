@@ -1,0 +1,25 @@
+<resources>
+  <string name="app_name">cba-assignment-skeleton</string>
+  <string name="title_activity_main2">MainActivity2</string>
+  <!-- Strings used for fragments for navigation -->
+  <string name="transaction_list_fragment_label">Transaction List</string>
+  <string name="transaction_details_fragment_label">Transaction Details</string>
+  <string name="next">Next</string>
+  <string name="previous">Previous</string>
+
+  <string name="complete_access">Complete Access</string>
+
+  <string name="sample_transaction_item_title_text"><b>PENDING:</b> Setapp (via Paddle.Net) +440808178853 GBR</string>
+
+  <!-- Content Descriptions -->
+  <string name="content_description_business_transaction">Business Transaction</string>
+  <string name="sample_amount">-$14.19</string>
+
+  <string name="pending">PENDING:</string>
+  <string name="available">Available</string>
+  <string name="balance">Balance</string>
+  <string name="pending_txt">Pending</string>
+  <string name="bsb">BSB</string>
+  <string name="account">Account</string>
+
+</resources>
