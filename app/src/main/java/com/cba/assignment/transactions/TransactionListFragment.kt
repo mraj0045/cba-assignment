@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.cba.assignment.MainViewModel
-import com.cba.assignment.R
-import com.cba.assignment.data.model.Transaction
+import com.cba.assignment.TransactionViewModel
 import com.cba.assignment.databinding.FragmentTransactionListBinding
-import com.cba.assignment.databinding.ListItemTransactionBinding
 import kotlinx.coroutines.launch
 
 /**
@@ -28,16 +26,15 @@ class TransactionListFragment : Fragment() {
 
     private val adapter: TransactionsAdapter by lazy {
         TransactionsAdapter { transaction ->
-            findNavController().navigate(R.id.TransactionDetails, Bundle().apply {
-                putString("category", transaction.category)
-                putString("description", transaction.description)
-                putFloat("amount", transaction.amount.toFloat())
-                putBoolean("isPending", transaction.isPending)
-            })
+            findNavController().navigate(
+                TransactionListFragmentDirections.actionTransactionListToTransactionDetails(
+                    transaction
+                )
+            )
         }
     }
 
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val transactionViewModel: TransactionViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -55,9 +52,12 @@ class TransactionListFragment : Fragment() {
 
     private fun observeTransactions() {
         viewLifecycleOwner.lifecycleScope.launch {
-            mainViewModel.transactionsFlow().collect {
+            binding.progressBar.isVisible = true
+            transactionViewModel.transactionsFlow().collect {
                 binding.swipeRefreshLayout.isRefreshing = false
-                adapter.setItems(it)
+                adapter.submitList(it) {
+                    binding.progressBar.isVisible = false
+                }
             }
         }
     }
@@ -65,7 +65,7 @@ class TransactionListFragment : Fragment() {
     private fun setUpAdapter() {
         binding.transactionListView.adapter = adapter
         binding.swipeRefreshLayout.setOnRefreshListener {
-            mainViewModel.fetAccountDetails()
+            transactionViewModel.fetAccountDetails()
         }
     }
 

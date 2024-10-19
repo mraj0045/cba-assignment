@@ -22,18 +22,8 @@
         tools:layout="@layout/fragment_transaction_detail">
 
         <argument
-            android:name="category"
-            app:argType="string" />
-        <argument
-            android:name="description"
-            app:argType="string" />
-
-        <argument
-            android:name="amount"
-            app:argType="float" />
-        <argument
-            android:name="isPending"
-            app:argType="boolean" />
+            android:name="transaction"
+            app:argType="com.cba.assignment.domain.model.Transaction" />
 
         <action
             android:id="@+id/action_TransactionDetails_to_TransactionList"

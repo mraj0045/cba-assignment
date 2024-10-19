@@ -12,22 +12,34 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Cba.Assignment.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll"
-            app:popupTheme="@style/Theme.Cba.Assignment.PopupOverlay">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll">
 
-            <TextView
-                style="?attr/textAppearanceHeadline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/complete_access"
-                android:textColor="@color/colorOnPrimary" />
-        </androidx.appcompat.widget.Toolbar>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.Cba.Assignment.PopupOverlay">
+
+                <TextView
+                    style="?attr/textAppearanceHeadline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/complete_access"
+                    android:textColor="@color/colorOnPrimary" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <include
+                android:id="@+id/accountDetailsLayout"
+                layout="@layout/layout_account_details" />
+
+        </LinearLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

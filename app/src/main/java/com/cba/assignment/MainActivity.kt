@@ -9,22 +9,20 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.cba.assignment.common.extension.formatAsAmount
-import com.cba.assignment.data.model.Account
 import com.cba.assignment.databinding.ActivityMainBinding
-import com.cba.assignment.databinding.LayoutAccountDetailsBinding
+import com.cba.assignment.domain.model.Account
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val transactionViewModel: TransactionViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel.fetAccountDetails()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,20 +38,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeAccountDetails() {
         lifecycleScope.launch {
-            mainViewModel.accountDetailsFlow().collect {
-                updateAccountDetailsIUI(account = it)
+            transactionViewModel.accountDetailsFlow().collect {
+                updateAccountDetailsInUI(account = it)
             }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun updateAccountDetailsIUI(account: Account) {
-        with(binding.contentMain.accountDetailsLayout) {
+    private fun updateAccountDetailsInUI(account: Account) {
+        with(binding.accountDetailsLayout) {
             dollarPrice.text = account.availableAmount.formatAsAmount()
             dollarBalance.text = account.balanceAmount.formatAsAmount()
             dollarPending.text = (account.availableAmount - account.balanceAmount).formatAsAmount()
@@ -61,5 +58,4 @@ class MainActivity : AppCompatActivity() {
             accountValue.text = account.accountNumber
         }
     }
-
 }
