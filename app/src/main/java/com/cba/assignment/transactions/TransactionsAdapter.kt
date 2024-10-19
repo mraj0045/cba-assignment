@@ -1,24 +1,24 @@
 package com.cba.assignment.transactions
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.cba.assignment.R
+import com.cba.assignment.common.extension.buildDescription
 import com.cba.assignment.common.extension.dateToDisplayFormat
 import com.cba.assignment.common.extension.formatAsAmount
+import com.cba.assignment.common.extension.getIcon
 import com.cba.assignment.common.extension.getTimeAgo
-import com.cba.assignment.data.model.Transaction
 import com.cba.assignment.databinding.ListItemTransactionBinding
 import com.cba.assignment.databinding.ListItemTransactionGroupBinding
+import com.cba.assignment.domain.model.Transaction
 
 class TransactionsAdapter(private val onClick: (Transaction) -> Unit) :
-    RecyclerView.Adapter<ViewHolder>() {
-
-    private var transactions: List<Any> = emptyList()
+    ListAdapter<Any, ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -31,35 +31,25 @@ class TransactionsAdapter(private val onClick: (Transaction) -> Unit) :
             else -> TransactionViewHolder(
                 ListItemTransactionBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                ),
-                onClick
+                ), onClick
             )
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = transactions[position]
+        val item = getItem(position)
         return when (item) {
             is String -> TYPE_DATE
             else -> TYPE_TRANSACTION
         }
     }
 
-    override fun getItemCount(): Int {
-        return transactions.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = transactions[position]
+        val item = getItem(position)
         when (holder) {
             is DateViewHolder -> holder.bind(item as String)
             is TransactionViewHolder -> holder.bind(item as Transaction)
         }
-    }
-
-    fun setItems(list: List<Any>) {
-        this.transactions = list
-        notifyDataSetChanged()
     }
 
     class DateViewHolder(
@@ -76,14 +66,13 @@ class TransactionsAdapter(private val onClick: (Transaction) -> Unit) :
     }
 
     class TransactionViewHolder(
-        private val binding: ListItemTransactionBinding,
-        val onClick: (Transaction) -> Unit
+        private val binding: ListItemTransactionBinding, val onClick: (Transaction) -> Unit
     ) : ViewHolder(binding.root) {
 
         fun bind(transaction: Transaction) {
             with(transaction) {
-                binding.transactionCategoryIcon.setImageResource(getIcon(category))
-                binding.transactionDescriptionText.text = buildDescription(isPending, description)
+                binding.transactionCategoryIcon.setImageResource(getIcon())
+                binding.transactionDescriptionText.text = buildDescription()
                 binding.transactionAmountText.text = amount.formatAsAmount()
                 binding.root.setOnClickListener {
                     onClick(transaction)
@@ -97,28 +86,18 @@ class TransactionsAdapter(private val onClick: (Transaction) -> Unit) :
 
         private const val TYPE_DATE = 1
         private const val TYPE_TRANSACTION = 2
-        fun getIcon(category: String): Int {
-            return when (category) {
-                "shopping" -> R.drawable.icon_category_shopping
-                "business" -> R.drawable.icon_category_business
-                "cards" -> R.drawable.icon_category_cards
-                "entertainment" -> R.drawable.icon_category_entertainment
-                "groceries" -> R.drawable.icon_category_groceries
-                "eatingOut" -> R.drawable.icon_category_eating_out
-                "transport" -> R.drawable.icon_category_transportation
-                "cash" -> R.drawable.icon_category_cash
-                "uncategorised" -> R.drawable.icon_category_uncategorised
-                else -> R.drawable.icon_category_uncategorised
-            }
-        }
 
-        fun buildDescription(isPending: Boolean, desc: String): CharSequence {
-            return buildSpannedString {
-                if (isPending) {
-                    bold { append("PENDING:") }
-                    append(desc)
-                } else {
-                    append(desc)
+        private val diffUtil = object : ItemCallback<Any>() {
+            override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+                return oldItem == newItem
+            }
+
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+                return when {
+                    oldItem is String && newItem is String -> oldItem == newItem
+                    oldItem is Transaction && newItem is Transaction -> oldItem.id == newItem.id
+                    else -> oldItem == newItem
                 }
             }
         }
